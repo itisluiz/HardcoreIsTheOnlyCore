@@ -1,5 +1,5 @@
 name: HardcoreIsTheOnlyCore
-version: '0.1'
+version: '0.2'
 main: com.itisluiz.hardcoreIsTheOnlyCore.HardcoreIsTheOnlyCore
 api-version: '1.21'
 prefix: hitoc
@@ -9,6 +9,10 @@ website: itisluiz.com
 commands:
   newgame:
     description: Creates a new world and restarts the server.
+    usage: /<command>
+    permission: hitoc.gamemaster
+  resetdeathmark:
+    description: Removes the death marks from all worlds.
     usage: /<command>
     permission: hitoc.gamemaster
 permissions:

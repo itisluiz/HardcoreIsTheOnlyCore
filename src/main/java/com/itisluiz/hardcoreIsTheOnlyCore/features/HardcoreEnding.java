@@ -1,15 +1,21 @@
 package com.itisluiz.hardcoreIsTheOnlyCore.features;
 
+import com.itisluiz.hardcoreIsTheOnlyCore.HardcoreIsTheOnlyCore;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.persistence.PersistentDataType;
 
 public final class HardcoreEnding
 {
 	private static HardcoreEnding instance;
+	private final NamespacedKey keyDeathMark;
 	private Location deathLocation;
 
-	private HardcoreEnding() {}
+	private HardcoreEnding()
+	{
+		keyDeathMark = new NamespacedKey(HardcoreIsTheOnlyCore.getInstance(), "deathMark");
+	}
 
 	public static HardcoreEnding getInstance()
 	{
@@ -49,6 +55,17 @@ public final class HardcoreEnding
 		}
 	}
 
+	public void markWorldsWithDeath(boolean isDeathMarked)
+	{
+		for (World world : Bukkit.getWorlds())
+			world.getPersistentDataContainer().set(keyDeathMark, PersistentDataType.BOOLEAN, isDeathMarked);
+	}
+
+	public boolean isWorldMarkedWithDeath(World world)
+	{
+		return world.getPersistentDataContainer().getOrDefault(keyDeathMark, PersistentDataType.BOOLEAN, false);
+	}
+
 	public Location getDeathLocation()
 	{
 		return deathLocation;
@@ -60,5 +77,6 @@ public final class HardcoreEnding
 		deathLocation = deadPlayer.getLocation();
 		sendFinalMessage(deadPlayer);
 		forceSpectatorMode(deathLocation);
+		markWorldsWithDeath(true);
 	}
 }

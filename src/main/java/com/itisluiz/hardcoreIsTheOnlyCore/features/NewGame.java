@@ -13,11 +13,11 @@ import java.io.UncheckedIOException;
 public final class NewGame
 {
 	private static NewGame instance;
-	private final boolean cfgBackupWorlds;
+	private final boolean cfgBackupWorldsOnNewGame;
 
 	private NewGame()
 	{
-		cfgBackupWorlds = HardcoreIsTheOnlyCore.getInstance().getConfig().getBoolean("backupWorlds");
+		cfgBackupWorldsOnNewGame = HardcoreIsTheOnlyCore.getInstance().getConfig().getBoolean("backupWorldsOnNewGame");
 	}
 
 	public static NewGame getInstance()
@@ -51,7 +51,7 @@ public final class NewGame
 
 	public void execute()
 	{
-		if (cfgBackupWorlds)
+		if (cfgBackupWorldsOnNewGame)
 		{
 			Bukkit.broadcastMessage(ChatColor.AQUA + "Starting a new game: " + ChatColor.RESET + "Backing up worlds");
 			WorldBackup.getInstance().execute();

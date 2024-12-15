@@ -1,2 +1,3 @@
 lowHealthWarningThreshold: 8
-backupWorlds: true
+backupWorldsOnNewGame: true
+forceSpectatorOnNewJoin: true
