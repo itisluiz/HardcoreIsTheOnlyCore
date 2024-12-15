@@ -1,0 +1,17 @@
+name: HardcoreIsTheOnlyCore
+version: '0.1'
+main: com.itisluiz.hardcoreIsTheOnlyCore.HardcoreIsTheOnlyCore
+api-version: '1.21'
+prefix: hitoc
+author: itisluiz
+description: Spigot plugin for a multiplayer hardcore experience.
+website: itisluiz.com
+commands:
+  newgame:
+    description: Creates a new world and restarts the server.
+    usage: /<command>
+    permission: hitoc.gamemaster
+permissions:
+  hitoc.gamemaster:
+    description: Allows execution of game management commands.
+    default: op
