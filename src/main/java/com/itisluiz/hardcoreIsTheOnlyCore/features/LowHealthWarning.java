@@ -44,32 +44,36 @@ public final class LowHealthWarning
 		HashSet<String> ailments = new HashSet<>();
 
 		if (player.hasPotionEffect(PotionEffectType.WITHER))
-			ailments.add(ChatColor.DARK_GRAY + "Withered" + ChatColor.RESET);
+			ailments.add(ChatColor.DARK_GRAY + "withered" + ChatColor.RESET);
 
 		if (player.hasPotionEffect(PotionEffectType.POISON))
-			ailments.add(ChatColor.GREEN + "Poisoned" + ChatColor.RESET);
+			ailments.add(ChatColor.GREEN + "poisoned" + ChatColor.RESET);
 
 		if (player.hasPotionEffect(PotionEffectType.BLINDNESS))
-			ailments.add(ChatColor.BLACK + "Blind" + ChatColor.RESET);
+			ailments.add(ChatColor.BLACK + "blind" + ChatColor.RESET);
 
 		if (player.hasPotionEffect(PotionEffectType.SLOWNESS))
-			ailments.add(ChatColor.BLUE + "Slowed" + ChatColor.RESET);
+			ailments.add(ChatColor.BLUE + "slowed" + ChatColor.RESET);
 
 		if (player.getFireTicks() > 0)
-			ailments.add(ChatColor.RED + "On Fire" + ChatColor.RESET);
+			ailments.add(ChatColor.RED + "on fire" + ChatColor.RESET);
 
 		if (player.getRemainingAir() == 0)
-			ailments.add(ChatColor.AQUA + "Drowning" + ChatColor.RESET);
+			ailments.add(ChatColor.AQUA + "drowning" + ChatColor.RESET);
 
 		if (player.getFoodLevel() == 0)
-			ailments.add(ChatColor.YELLOW + "Starving" + ChatColor.RESET);
+			ailments.add(ChatColor.YELLOW + "starving" + ChatColor.RESET);
 
 		return ailments;
 	}
 
+	private String getFallDamageAilment(Player player) {
+		return ChatColor.GOLD + "falling %d blocks down".formatted((int)player.getFallDistance()) + ChatColor.RESET;
+	}
+
 	public void execute(EntityDamageEvent entityDamageEvent)
 	{
-		if (entityDamageEvent.getEntityType() != EntityType.PLAYER)
+		if (entityDamageEvent.getEntityType() != EntityType.PLAYER || entityDamageEvent.getFinalDamage() <= 0)
 			return;
 
 		Player player = (Player)entityDamageEvent.getEntity();
@@ -85,6 +89,9 @@ public final class LowHealthWarning
 
 		HashSet<String> ailments = getPlayerAilments(player);
 
+		if (entityDamageEvent.getCause() == EntityDamageEvent.DamageCause.FALL)
+			ailments.add(getFallDamageAilment(player));
+
 		String newMessageString;
 		if (!ailments.isEmpty())
 		{
@@ -96,7 +103,7 @@ public final class LowHealthWarning
 
 		LastMessage newMessage = new LastMessage(newMessageString);
 
-		if (lastMessage != null && lastMessage.shouldSendNext(newMessage, 1000))
+		if (lastMessage == null || lastMessage.shouldSendNext(newMessage, 1000))
 		{
 			Bukkit.broadcastMessage(newMessageString);
 			playLowHealthSound(remainingHealth);

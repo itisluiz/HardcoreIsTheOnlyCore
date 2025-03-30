@@ -1,3 +1,5 @@
 lowHealthWarningThreshold: 8
+regainedHealthWarningThreshold: 12
+lifeSavingBlockWarning: true
 backupWorldsOnNewGame: true
 forceSpectatorOnNewJoin: true

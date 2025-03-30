@@ -3,7 +3,7 @@ package com.itisluiz.hardcoreIsTheOnlyCore.features;
 import com.itisluiz.hardcoreIsTheOnlyCore.HardcoreIsTheOnlyCore;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.persistence.PersistentDataType;
 
 public final class HardcoreEnding
@@ -71,9 +71,9 @@ public final class HardcoreEnding
 		return deathLocation;
 	}
 
-	public void execute(EntityDeathEvent entityDeathEvent)
+	public void execute(PlayerDeathEvent playerDeathEvent)
 	{
-		Player deadPlayer = (Player)entityDeathEvent.getEntity();
+		Player deadPlayer = playerDeathEvent.getEntity();
 		deathLocation = deadPlayer.getLocation();
 		sendFinalMessage(deadPlayer);
 		forceSpectatorMode(deathLocation);

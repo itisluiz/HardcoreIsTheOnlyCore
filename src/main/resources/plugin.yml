@@ -1,5 +1,5 @@
 name: HardcoreIsTheOnlyCore
-version: '0.2'
+version: '0.3'
 main: com.itisluiz.hardcoreIsTheOnlyCore.HardcoreIsTheOnlyCore
 api-version: '1.21'
 prefix: hitoc
